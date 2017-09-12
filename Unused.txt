@@ -1,0 +1,289 @@
+            <p><a href="{{url('/register')}}">Register Here</a> (Or) go back to <a href="{{url('/')}}">Home<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></p>
+@extends('master')
+@section('content')
+    @endsection
+
+
+
+
+
+
+
+    //Register
+    @extends('master')
+    @section('content')
+        <div class="breadcrumbs">
+            <div class="container">
+                <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+                    <li><a href="{{url('/')}}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+                    <li>Investment Registration page</li>
+                </ol>
+            </div>
+        </div>
+        <!-- //breadcrumbs -->
+        <!-- register -->
+        @include('Partials._message')
+        <div class="register">
+            <div class="container">
+
+                <h2 style="color:#ff0a11;">Register For an Investment Here</h2>
+                <div class="login-form-grids">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="{{url('/register')}}" method="post">
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <input id="firstname" name="firstname" placeholder="First Name..." type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input id="lastname" name="lastname" placeholder="Last Name..." type="text" required/>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 10px;">
+                            <select class="form-control p-input"  id="gender" name="gender" style="border-radius:0!important;">
+                                <option value="">Gender</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input  id="dob" name="dob" placeholder=" Format...12/12/2012" type="text" value="" required/>
+                        </div>
+                        <div class="form-group">
+                            <input  id="country" name="country" placeholder="Country" type="text" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input  id="city" name="city" placeholder="City" type="text" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input  id="phone_number" name="phone_number" placeholder="Phone Number" type="text" value="" required/>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control input-lg p-input" cols="40" id="address" name="address" placeholder="Contact Address" rows="2" style="border-radius:0!important;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input id="email" name="email" placeholder="Email" type="text" value="" required/>
+                        </div>
+                        <div class="form-group">
+                            <input id="password" name="password" placeholder="Password" type="password" required/>
+                        </div>
+                        <div class="form-group">
+                            <input id="conf_password" name="conf_password" placeholder="Confirm Password" type="password"  required/>
+                        </div>
+
+                        <input type="submit" value="Register">
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endsection
+
+    //Register
+
+    //User vreate table
+    Schema::create('users', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('firstname');
+                $table->string('lastname');
+                $table->string('gender');
+                $table->string('dob');
+                $table->string('country');
+                $table->string('city');
+                $table->string('phone_number');
+                $table->string('address');
+                $table->string('email')->unique();
+                $table->string('password');
+                $table->rememberToken();
+                $table->timestamps();
+            });
+        }
+        //UCT
+
+        //Validation Code
+        public function register(Request $request)
+            {
+
+                $this->validate($request, [
+                    'firstname' => 'required',
+                    'lastname' => 'required',
+                    'email' => 'required|unique:users,email',
+                    'gender' => 'required',
+                    'dob' => 'required',
+                    'country' => 'required',
+                    'city' => 'required',
+                    'phone_number' => 'required',
+                    'address' => 'required',
+                    'password' => 'required',
+                    'conf_password' => 'required|same:password'
+                ]);
+
+                $user = new User([
+                    'firstname' => $request->firstname,
+                    'lastname' => $request->lastname,
+                    'email' => $request->email,
+                    'gender' => $request->gender,
+                    'dob' => $request->dob,
+                    'country' => $request->country,
+                    'city' => $request->city,
+                    'phone_number' => $request->phone_number,
+                    'address' => $request->address,
+                    'password' => Hash::make($request->password),
+                ]);
+
+                try{
+                    $user->save();
+                    Session::flash('success','Account Created Successfully');
+                }
+                catch(\Exception $ex){
+                    $this->Logger()->LogError('Register: User could not be registered',$ex,['user' => $user]);
+                }
+                return redirect()->back();
+                //dd($request->all());
+            }//
+
+
+            <div class="col-md-3 top_brand_left">
+                                <div class="hover14 column">
+                                    <div class="agile_top_brand_left_grid">
+                                        <div class="agile_top_brand_left_grid_pos">
+                                            <img src="/images/offer.png" alt=" " class="img-responsive">
+                                        </div>
+                                        <div class="agile_top_brand_left_grid1">
+                                            <figure>
+                                                <div class="snipcart-item block">
+                                                    <div class="snipcart-thumb">
+                                                        <a href=""><img title=" " alt=" " src="/images/cryptocurrency.png" width="200px" height="200px"></a>
+                                                        <p>Parryss-sugar</p>
+                                                        <h4>$30.99 <span>$45.00</span></h4>
+                                                    </div>
+                                                    <div class="snipcart-details top_brand_home_details">
+                                                        <form action="{{route('market_view')}}" method="post">
+                                                            {{csrf_field()}}
+                                                            <fieldset>
+                                                                <input type="hidden" name="id" id="id" value="ID HERE">
+                                                                <input type="submit" name="submit" value="View More..." class="button">
+                                                            </fieldset>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 top_brand_left">
+                                <div class="hover14 column">
+                                    <div class="agile_top_brand_left_grid">
+                                        <div class="agile_top_brand_left_grid_pos">
+                                            <img src="/images/offer.png" alt=" " class="img-responsive">
+                                        </div>
+                                        <div class="agile_top_brand_left_grid1">
+                                            <figure>
+                                                <div class="snipcart-item block">
+                                                    <div class="snipcart-thumb">
+                                                        <a href=""><img title=" " alt=" " src="/images/gbadegesin.jpg" width="200px" height="200px"></a>
+                                                        <p>Parryss-sugar</p>
+                                                        <h4>$30.99 <span>$45.00</span></h4>
+                                                    </div>
+                                                    <div class="snipcart-details top_brand_home_details">
+                                                        <form action="{{route('market_view')}}" method="post">
+                                                            {{csrf_field()}}
+                                                            <fieldset>
+                                                                <input type="hidden" name="id" id="id" value="ID HERE">
+                                                                <input type="submit" name="submit" value="View More..." class="button">
+                                                            </fieldset>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            @extends('master')
+                            @section('content')
+                                <div class="content-inner">
+                                    <!-- Page Header-->
+                                    <header class="page-header">
+                                        <div class="container-fluid">
+                                            <h2 class="no-margin-bottom"></h2>
+                                        </div>
+
+
+                                        <div class="col-lg-2">
+                                            &nbsp;&nbsp;&nbsp;<form class="form-inline">
+                                                {{csrf_field()}}
+                                                <div class=""></div>
+                                            </form>
+                                        </div>
+                                        <br/>
+                                        @include('Partials._message')
+                                        <div class="row">
+                                            <p style="font-size: xx-large"> Investment Name: {{\App\inv_aff::find($inn_id)->name}}</p>
+                                            <div class="col-lg-6 col-md-6 col-sm-4">
+                                                @if(count($inv) > 0)
+                                                    <div class=" table table-responsive">
+                                                        <table id="table" class="table table-bordered">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>S/N</th>
+                                                                <th>Name</th>
+                                                                <th>Link</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <?php $i =1;?>
+                                                            @foreach($inv as $in)
+                                                                <tr>
+                                                                    <td>{{$i++}}</td>
+                                                                    <td>{{$in->name}}</td>
+                                                                    <td><a href="{{asset('files/tutorials/'.$in->name)}}">{{asset('files/tutorials/'.$in->name)}}</a> </td>
+                                                                    <td>
+                                                                        <p><a href="{{route('admin_tut_delete',['id' => $in->id * 8009 * 8009])}}" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; Edit</a></p>
+                                                                        <p style="margin-top: -10px;"><a href="{{route('admin_inv_delete',['id' => $in->id * 8009 * 8009])}}" onclick="return confirm('Are you sure you want to delete investment?');" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp; Delete</a></p>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                @else
+                                                    <div class="pane panel-default">
+                                                        <div class="panel-body">
+                                                            <p style="text-align: center; font-family: 'Comic Sans MS';font-size: xx-large;">No Data</p>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-4">
+                                                <h2 style="text-align: center;">Add Tutorial</h2>
+                                                <form action="{{route('admin_inv_tut',['id' => $inn_id * 8009 * 8009])}}" method="POST" enctype="multipart/form-data">
+                                                    {{csrf_field()}}
+                                                    <div class="form-group">
+                                                        <label>Upload Tutorial: </label>
+                                                        <input type="file" class="form-control" name="tut" id="tut" required placeholder="Upload Tutorial"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-send"></i> Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </header>
+                                    <!-- Page Footer-->
+
+
+                                </div>
+                            @endsection
