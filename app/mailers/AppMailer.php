@@ -15,7 +15,7 @@ class AppMailer
 {
     protected $mailer;
     protected $fromAddress = 'info@cmiclub.org';
-    protected $fromName = 'Name Name';
+    protected $fromName = 'CMIC Info';
     protected $to;
     protected $subject;
     protected $view;
@@ -39,6 +39,16 @@ class AppMailer
         return $this->deliver();
     }
 
+    public function sendMail($emails, $msg, $sub)
+    {
+        $em = explode(',',$emails);
+        $this->to = $em;
+        $this->subject = $sub;
+        $this->view = 'User.Email.activate';
+        $this->data = compact('msg');
+
+        return $this->deliver();
+    }
     public function deliver()
     {
         try{
@@ -46,9 +56,12 @@ class AppMailer
                 $message->from($this->fromAddress, $this->fromName)
                     ->to($this->to)->subject($this->subject);
             });
+
+            dd('done');
         }
         catch (\Exception $ex)
         {
+            dd($ex);
             $this->Logger()->LogError('An Error Occured When Trying to Send Mail',$ex,['to' => $this->to
             , 'subj' => $this->subject,'data' => $this->data]);
         }

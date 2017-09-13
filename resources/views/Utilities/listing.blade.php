@@ -4,7 +4,7 @@
     <!--investment news-->
     @include('Partials._message')
     @foreach($inv as $in)
-        <section class="container-fluid jumbotron" style="margin-bottom: 0 !important;">
+        <section class="container-fluid" style="margin-top: 50px !important;">
             <header class="text-center" style="text-align: center; size: 25px; color: #777;"><h2 style="font-size:20px !important;">{{$in->name}}</h2></header>
             <div class="row container">
                 <div class="col-lg-5 col-sm-5">

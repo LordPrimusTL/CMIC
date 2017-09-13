@@ -6,7 +6,7 @@ Route::get('/register','UtilityController@register')->name('register');
 Route::get('/contact','UtilityController@contact')->name('contact');
 Route::get('/about','UtilityController@about')->name('about');
 Route::get('/listings','UtilityController@listings')->name('listings');
-Route::get('/accountAct,{id}','UtilityController@accountActivation')->name('accAct');
+Route::get('/accountAct/{id}','UtilityController@accountActivation')->name('accAct');
 
 Route::get('market','UserController@market')->name('user_market');
 Route::get('market/view','UserController@marketView')->name('market_view');
@@ -148,6 +148,11 @@ Route::group(['prefix' => '/admin/','middleware' => ['auth','AdminAuth']], funct
     Route::get('market','AdminController@market')->name('admin_market');
     Route::get('market/delete/{id}','AdminController@market_del')->name('admin_market_delete');
 
+    //Mails
+    Route::get('mail','AdminController@email')->name('mail');
+    Route::get('mail/send/{email}','AdminController@emaild')->name('email');
+    Route::get('mail/all','AdminController@email_all')->name('mail.all');
+
 
     //Validations
     Route::post('investment/add','ValidationController@inv_add')->name('admin_inv_add');
@@ -163,6 +168,7 @@ Route::group(['prefix' => '/admin/','middleware' => ['auth','AdminAuth']], funct
     Route::post('awards/add','ValidationController@awards_add')->name('admin_awards_add');
     Route::post('deals/add','ValidationController@deals_add')->name('admin_deals_add');
     Route::post('awards/winner/add/{id}','ValidationController@awards_win_wadd')->name('admin_awards_wadd');
+    Route::post('mail/send','ValidationController@mailSend')->name('mail_send');
 
 
 
@@ -178,6 +184,8 @@ Route::group(['prefix' => '/admin/','middleware' => ['auth','AdminAuth']], funct
     Route::post('awards/deals','ValidationController@dealSearch')->name('admin_deal_search');
 
     //
+
+
 
 
 

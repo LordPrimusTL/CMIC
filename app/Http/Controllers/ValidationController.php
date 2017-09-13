@@ -11,6 +11,7 @@ use App\Helper\Logger;
 use App\inv_aff;
 use App\inv_reg;
 use App\inv_tut;
+use App\Jobs\SendEmails;
 use App\mailers\AppMailer;
 use App\news;
 use App\paw;
@@ -105,7 +106,7 @@ class ValidationController extends Controller
 
         $user->image = 'avatar.png';
         try{
-            //$user->save();
+            $user->save();
             $mailer->activateUser($user);
             Session::flash('success','Hurray!!! Registration Completed Successfully, You Can Sign In Now');
             return redirect()->route('login');
@@ -651,6 +652,31 @@ class ValidationController extends Controller
         }
     }
 
+    //Mail
+    public function mailSend(Request $request, AppMailer $mailer)
+    {
+        $this->validate($request,[
+                'to' => 'required',
+                'msg' => ' required'
+        ]);
+
+        Log::info('startt');
+
+        try{
+            $email = $request->to[0];
+            $msg = $request->msg;
+            $sub = $request->subject;
+            var_dump(10);
+            $jb = (new SendEmails($email, $msg, $sub))->delay(10);
+            $this->dispatch($jb);
+            Session::flash('success','Mail Sent. ');
+        }
+        catch(\Exception $ex){
+            Session::flash('error','an Error Occured, Please Try Again');
+            $this->Logger()->LogError('Unable To send mail',$ex,['Emails' => $email,'message' => $msg,'subject' => $sub]);
+        }
+        return redirect()->back()->withInput();
+    }
 
     //Both Admin and User
     public function regDelete($id)
@@ -1072,8 +1098,6 @@ class ValidationController extends Controller
 
 
     //deals
-
-
     public function dealSearch(Request $req)
     {
 

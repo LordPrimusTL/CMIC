@@ -3,7 +3,7 @@
     <!--investment news-->
     <?php echo $__env->make('Partials._message', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <?php $__currentLoopData = $inv; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $in): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <section class="container-fluid jumbotron" style="margin-bottom: 0 !important;">
+        <section class="container-fluid" style="margin-top: 50px !important;">
             <header class="text-center" style="text-align: center; size: 25px; color: #777;"><h2 style="font-size:20px !important;"><?php echo e($in->name); ?></h2></header>
             <div class="row container">
                 <div class="col-lg-5 col-sm-5">
@@ -18,7 +18,7 @@
                         <?php echo e($in->text); ?>
 
                     </p>
-                    <a href="<?php if($in->link == null): ?><?php echo e(route('register')); ?><?php else: ?> <?php echo e($in->link); ?><?php endif; ?>" class="btn btn-primary"> Register <i class="fa fa-send"></i></a>
+                    <a href="<?php if($in->link == null): ?><?php echo e(route('register')); ?><?php else: ?> <?php echo e($in->link); ?><?php endif; ?>" class="btn btn-primary" target="_blank"> Register <i class="fa fa-send"></i></a>
                 </div>
             </div>
         </section>

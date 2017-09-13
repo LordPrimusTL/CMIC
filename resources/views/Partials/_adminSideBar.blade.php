@@ -10,6 +10,7 @@
     <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
     <ul class="list-unstyled">
         <li class="{{Request::is('admin/dashboard')? "active" : " "}}"> <a href="{{route('admin_dash')}}"><i class="fa fa-user"></i>&nbsp;Users</a></li>
+        <li class="{{Request::is('admin/mail') || Request::is('admin/email') ? "active" : " "}}"> <a href="{{route('mail')}}"><i class="fa fa-mail-forward"></i>&nbsp;Send Mail</a></li>
         <li class="{{Request::is('admin/administrators')? "active" : " "}}"> <a href="{{route('admin_admin')}}"><i class="fa fa-user-secret"></i>&nbsp;Administrators</a></li>
         <li class="{{Request::is('admin/news') ? "active" : ""}}"><a href="{{route('admin_news')}}"><i class="fa fa-info"></i>&nbsp;News</a></li>
         <li class="{{Request::is('admin/investments') ||Request::is('admin/investment/add') ? "active" : ""}}"><a href="{{route('admin_inv')}}"><i class="fa fa-money"></i>&nbsp;Investments</a></li>

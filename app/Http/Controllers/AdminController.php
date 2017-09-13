@@ -41,6 +41,31 @@ class AdminController extends Controller
         return view('Admin.dashboard')->with(['title' => 'Admin Dashboard','users' => $user]);
     }
 
+    //Email
+    public function email()
+    {
+        return view('Admin.mail',['title' => 'Mail','user' => null]);
+    }
+    public function email_all()
+    {
+        $user = User::pluck('email');
+        //dd($user);
+        $a = [];
+        $s = null;
+        foreach ($user as $m)
+        {
+            if($s == null)
+            {
+                $s = $m;
+            }
+            else{
+                $s = $s . ',' . $m;
+            }
+        }
+        //dd([$s][0]);
+        $user = $s;
+        return view('Admin.mail',['title' => 'Mail','user' => $user]);
+    }
     //User
     public function user_view($id)
     {
