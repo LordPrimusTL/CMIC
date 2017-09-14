@@ -117,10 +117,10 @@
                             <div class="panel panel-default" style="border:none !important;">
                                 <div class="panel-body">
                                     <p>
-                                        <img src="images/Invest5.jpg" class="img img-rounded img-responsive" style="width:250px !important;height:200px !important;" />
+                                        <img src="images/invest5.jpg" class="img img-rounded img-responsive" style="width:250px !important;height:200px !important;" />
                                     </p>
                                 </div>
-                                <h2 class="ll-headers">LOCAL INVESTMENTS</h2>
+                                <h2 class="ll-headers">CLUB INVESTMENTS</h2>
                                 <p class="well-sm">
                                     <ul class="list-group">
                                         <li class="list-group-item">
